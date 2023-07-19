@@ -9,12 +9,22 @@ import {
 import { UsersService } from './users.service';
 import { UserCreateRequest } from './dto/users.dto';
 import { UserCreateReturn } from './dto/users.return';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiOperation({
+    summary: '유저 데이터 생성 API',
+    tags: ['Users'],
+  })
+  @ApiResponse({
+    status: 201,
+    description: '유저 데이터 생성 및 해당 데이터 반환',
+    type: UserCreateReturn,
+  })
   createUser(
     @Body() userCreateRequest: UserCreateRequest,
   ): Promise<UserCreateReturn> {
@@ -22,6 +32,15 @@ export class UsersController {
   }
 
   @Get(':userId')
+  @ApiOperation({
+    summary: '유저 데이터 조회 API',
+    tags: ['Users'],
+  })
+  @ApiResponse({
+    status: 200,
+    description: '유저 식별 아이디에 해당하는 데이터 반환',
+    type: UserCreateReturn,
+  })
   getUser(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<Omit<UserCreateReturn, 'password'>> {
