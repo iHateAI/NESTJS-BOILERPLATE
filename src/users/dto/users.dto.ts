@@ -1,4 +1,10 @@
-import { IsEnum, IsEmail, IsString, IsNotEmpty } from 'class-validator';
+import {
+  IsEnum,
+  IsEmail,
+  IsString,
+  IsNotEmpty,
+  MaxLength,
+} from 'class-validator';
 
 enum Gender {
   male = '남',
@@ -8,17 +14,21 @@ enum Gender {
 export class UserCreateRequest {
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  @MaxLength(50)
+  readonly email: string;
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  @MaxLength(50)
+  readonly password: string;
 
   @IsString()
   @IsNotEmpty()
-  nickname: string;
+  @MaxLength(10)
+  readonly nickname: string;
 
   @IsEnum(Gender)
+  @IsString()
   @IsNotEmpty()
-  gender: string;
+  readonly gender: string;
 }

@@ -22,7 +22,7 @@ export class UsersEntity {
 
   @Column({
     type: 'varchar',
-    length: 50,
+    length: 100,
   })
   password: string;
 
