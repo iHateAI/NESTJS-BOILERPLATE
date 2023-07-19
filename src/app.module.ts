@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { UsersEntity } from './users/entity/users.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { UsersModule } from './users/users.module';
       database: 'test',
       synchronize: true,
       logging: true,
-      entities: [],
+      entities: [UsersEntity],
     }),
     UsersModule,
   ],
