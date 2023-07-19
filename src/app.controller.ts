@@ -6,8 +6,9 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    throw new HttpException('에러', 404);
-    //return this.appService.getHello();
+  getHello(): any {
+    return {
+      text: 'hi',
+    };
   }
 }
