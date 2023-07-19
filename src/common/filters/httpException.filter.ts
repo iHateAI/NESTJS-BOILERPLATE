@@ -17,7 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       | string
       | {
           statusCode: number;
-          message: string;
+          message: string | string[];
           error: string;
         };
 
