@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/httpException.filter';
 import { SuccessInterceptor } from './common/interceptors/success.interceptor';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger/dist';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +18,18 @@ async function bootstrap() {
       skipMissingProperties: false, //검증 데코레이터가 붙은 프로퍼티가 대상 오브젝트에 존재하지 않으면 오류를 내개 하는 옵션
     }),
   );
+
+  const document = SwaggerModule.createDocument(
+    app,
+    new DocumentBuilder()
+      .setTitle('Title')
+      .setDescription('API DOCS')
+      .setVersion('0.0.0')
+      .addTag('Tag')
+      .build(),
+  );
+  SwaggerModule.setup('docs', app, document);
+
   await app.listen(3000);
 }
 bootstrap();
