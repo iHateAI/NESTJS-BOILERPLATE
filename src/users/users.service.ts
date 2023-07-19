@@ -36,4 +36,17 @@ export class UsersService {
       throw new HttpException(`BCRYPT ERROR: ${err.message}`, 500);
     }
   }
+
+  async getUser(userId: number): Promise<UserCreateReturn> {
+    const isExistedId = await this.usersRepository.checkExistById(userId);
+    if (!isExistedId) {
+      throw new HttpException('존재하지 않는 유저입니다.', 404);
+    }
+
+    const { password, ...user } = await this.usersRepository.findOneById(
+      userId,
+    );
+
+    return user;
+  }
 }

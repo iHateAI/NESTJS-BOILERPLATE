@@ -1,4 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserCreateRequest } from './dto/users.dto';
 import { UserCreateReturn } from './dto/users.return';
@@ -12,5 +19,12 @@ export class UsersController {
     @Body() userCreateRequest: UserCreateRequest,
   ): Promise<UserCreateReturn> {
     return this.usersService.createUser(userCreateRequest);
+  }
+
+  @Get(':userId')
+  getUser(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<Omit<UserCreateReturn, 'password'>> {
+    return this.usersService.getUser(userId);
   }
 }

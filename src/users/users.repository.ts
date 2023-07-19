@@ -81,6 +81,17 @@ export class UsersRepository {
     }
   }
 
+  async checkExistById(id: number): Promise<boolean> {
+    try {
+      return await this.Users.createQueryBuilder()
+        .select()
+        .where('id = :id', { id })
+        .getExists();
+    } catch (err) {
+      throw new HttpException(`MYSQL ERROR: ${err.message}`, 500);
+    }
+  }
+
   async delete(id: number): Promise<any> {
     try {
       return await this.Users.createQueryBuilder()
