@@ -3,12 +3,22 @@ import { AuthService } from './auth.service';
 import { AuthLoginRequest } from './dto/auth.dto';
 import { Request, Response } from 'express';
 import { UserCreateReturn } from 'src/users/dto/users.return';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
+  @ApiOperation({
+    summary: '로그인 API',
+    tags: ['Auth'],
+  })
+  @ApiResponse({
+    status: 201,
+    description: '로그인 및 세션 생성',
+    type: UserCreateReturn,
+  })
   async login(
     @Body() authLoginRequest: AuthLoginRequest,
     @Res({ passthrough: true }) response: Response,
@@ -27,6 +37,14 @@ export class AuthController {
   }
 
   @Post('logout')
+  @ApiOperation({
+    summary: '로그아웃 API',
+    tags: ['Auth'],
+  })
+  @ApiResponse({
+    status: 201,
+    description: '로그아웃 및 세션 삭제',
+  })
   async logout(@Req() req: Request, @Res() res: Response): Promise<void> {
     const cookie = req.headers.cookie;
     const sessionId = cookie?.split('=')[1];
