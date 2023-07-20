@@ -16,7 +16,7 @@ import { UsersEntity } from './users/entity/users.entity';
       port: parseInt(process.env.MYSQL_PORT, 10),
       username: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
-      database: 'test',
+      database: process.env.MYSQL_DATABASE,
       synchronize: true,
       logging: true,
       entities: [UsersEntity],
