@@ -4,7 +4,7 @@ import { UsersRepository } from 'src/users/users.repository';
 import * as bcrypt from 'bcrypt';
 import { uuid } from 'uuidv4';
 import { AuthRepository } from './auth.repository';
-import { AuthLoginReturn } from './dto/auth.return';
+import { AuthLoginReturn, AuthLogoutReturn } from './dto/auth.return';
 
 @Injectable()
 export class AuthService {
@@ -41,7 +41,15 @@ export class AuthService {
     return uuid();
   }
 
-  async getSession(sessionId: string) {
+  async getSession(sessionId: string): Promise<string> {
     return await this.authRepository.findSessionBySessionId(sessionId);
+  }
+
+  async logout(sessionId: string): Promise<AuthLogoutReturn> {
+    if (!sessionId) {
+      throw new HttpException('잘못된 접근입니다. (쿠키에 세션Id 없음)', 400);
+    }
+
+    return await this.authRepository.deleteSession(sessionId);
   }
 }

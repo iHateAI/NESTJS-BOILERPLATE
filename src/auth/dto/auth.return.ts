@@ -8,3 +8,11 @@ export class AuthLoginReturn extends UserCreateReturn {
   })
   sessionId: string;
 }
+
+export class AuthLogoutReturn {
+  @ApiProperty({
+    example: 1,
+    description: '삭제된 key 개수',
+  })
+  deletedCount: number;
+}

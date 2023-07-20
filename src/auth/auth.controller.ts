@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthLoginRequest } from './dto/auth.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { UserCreateReturn } from 'src/users/dto/users.return';
 
 @Controller('auth')
@@ -24,5 +24,21 @@ export class AuthController {
       httpOnly: true,
     });
     return userWithoutPassword;
+  }
+
+  @Post('logout')
+  async logout(@Req() req: Request, @Res() res: Response): Promise<void> {
+    const cookie = req.headers.cookie;
+    const sessionId = cookie?.split('=')[1];
+    const { deletedCount } = await this.authService.logout(sessionId);
+
+    res.clearCookie('sessionId', { path: '/', httpOnly: true });
+    res.json({
+      success: true,
+      timeStamp: new Date().toISOString(),
+      result: {
+        deletedCount,
+      },
+    });
   }
 }
