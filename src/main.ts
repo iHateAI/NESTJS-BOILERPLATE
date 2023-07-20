@@ -5,6 +5,7 @@ import { SuccessInterceptor } from './common/interceptors/success.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +19,7 @@ async function bootstrap() {
       skipMissingProperties: false, //검증 데코레이터가 붙은 프로퍼티가 대상 오브젝트에 존재하지 않으면 오류를 내개 하는 옵션
     }),
   );
+  app.use(cookieParser());
 
   const document = SwaggerModule.createDocument(
     app,
