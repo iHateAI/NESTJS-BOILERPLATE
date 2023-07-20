@@ -10,7 +10,7 @@ export class AuthLoginRequest {
   @IsEmail()
   @IsNotEmpty()
   @MaxLength(50)
-  email: string;
+  readonly email: string;
 
   @ApiProperty({
     example: 'kdfjw3as902e',

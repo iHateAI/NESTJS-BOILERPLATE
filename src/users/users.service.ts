@@ -37,12 +37,13 @@ export class UsersService {
     }
   }
 
-  async getUser(userId: number): Promise<UserCreateReturn> {
+  async getUser(userId: number): Promise<Omit<UserCreateReturn, 'password'>> {
     const isExistedId = await this.usersRepository.checkExistById(userId);
     if (!isExistedId) {
       throw new HttpException('존재하지 않는 유저입니다.', 404);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...user } = await this.usersRepository.findOneById(
       userId,
     );
