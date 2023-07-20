@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     const sessionId = this.generateSessionId();
-    await this.authRepository.createSession(user.id, sessionId);
+    await this.authRepository.createSession(sessionId, user.id);
 
     return {
       sessionId,
@@ -39,5 +39,9 @@ export class AuthService {
 
   generateSessionId(): string {
     return uuid();
+  }
+
+  async getSession(sessionId: string) {
+    return await this.authRepository.findSessionBySessionId(sessionId);
   }
 }

@@ -10,13 +10,21 @@ export class AuthRepository {
     this.redis = this.redisService.getClient('session');
   }
 
-  async createSession(userId: number, sessionId: string) {
+  async createSession(sessionId: string, userId: number) {
     try {
-      await this.redis.set(userId.toString(), sessionId);
+      await this.redis.set(sessionId, userId.toString());
       // 숫자 순서대로 초, 분, 시, 일 (7일간 DB에 보관 이후 자동 삭제)
       await this.redis.expire(userId.toString(), 60 * 60 * 24 * 7);
     } catch (err) {
-      throw new HttpException(`세션저장실패: ${err.message}`, 500);
+      throw new HttpException(`세션 저장 실패: ${err.message}`, 500);
+    }
+  }
+
+  async findSessionBySessionId(sessionId: string) {
+    try {
+      return await this.redis.get(sessionId);
+    } catch (err) {
+      throw new HttpException(`세션 불러오기 실패: ${err.message}`, 500);
     }
   }
 }
