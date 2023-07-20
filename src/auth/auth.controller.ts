@@ -19,7 +19,10 @@ export class AuthController {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
 
-    response.cookie('sessionId', sessionId);
+    response.cookie('sessionId', sessionId, {
+      maxAge: 60 * 60 * 24 * 7,
+      httpOnly: true,
+    });
     return userWithoutPassword;
   }
 }
