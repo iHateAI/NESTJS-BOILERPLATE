@@ -29,7 +29,7 @@ export class UsersRepository {
     }
   }
 
-  async findOneById(id: number): Promise<any> {
+  async findOneById(id: number): Promise<UserCreateReturn> {
     try {
       return await this.Users.createQueryBuilder()
         .select()
@@ -40,7 +40,7 @@ export class UsersRepository {
     }
   }
 
-  async findOneByEmail(email: string): Promise<any> {
+  async findOneByEmail(email: string): Promise<UserCreateReturn> {
     try {
       return await this.Users.createQueryBuilder()
         .select()
@@ -51,7 +51,7 @@ export class UsersRepository {
     }
   }
 
-  async findAll(): Promise<any> {
+  async findAll(): Promise<UserCreateReturn[]> {
     try {
       return await this.Users.createQueryBuilder().select().getMany();
     } catch (err) {
