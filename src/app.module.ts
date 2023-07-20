@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { UsersEntity } from './users/entity/users.entity';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 @Module({
   imports: [
@@ -20,6 +21,16 @@ import { UsersEntity } from './users/entity/users.entity';
       synchronize: true,
       logging: true,
       entities: [UsersEntity],
+    }),
+    RedisModule.forRoot({
+      config: [
+        {
+          namespace: 'session',
+          host: process.env.REDIS_SESSION_HOST,
+          port: parseInt(process.env.REDIS_SESSION_PORT, 10),
+          password: process.env.REDIS_SESSION_PASSWORD,
+        },
+      ],
     }),
     UsersModule,
   ],
