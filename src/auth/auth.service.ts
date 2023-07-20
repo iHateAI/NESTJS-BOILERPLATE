@@ -18,15 +18,14 @@ export class AuthService {
     const isExistedEmail = await this.usersRepository.checkExistByEmail(email);
 
     if (!isExistedEmail) {
-      throw new HttpException('존재하지 않는 이메일입니다.', 400);
+      throw new HttpException('존재하지 않는 이메일입니다.', 401);
     }
 
     const user = await this.usersRepository.findOneByEmail(email);
+    const isRightPassword = await bcrypt.compare(password, user.password);
 
-    try {
-      await bcrypt.compare(password, user.password);
-    } catch (err) {
-      throw new HttpException('비밀번호가 일치하지 않습니다.', 400);
+    if (!isRightPassword) {
+      throw new HttpException('비밀번호가 일치하지 않습니다.', 401);
     }
 
     const sessionId = this.generateSessionId();
