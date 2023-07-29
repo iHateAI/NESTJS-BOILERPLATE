@@ -11,3 +11,4 @@
 - .env
 - Github Actions
 - 간단한 인증, 유저 API
+- pm2
