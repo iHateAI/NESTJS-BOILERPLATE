@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 import { UserCreateRequest } from './dto/users.dto';
 import { UserCreateReturn } from './dto/users.return';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('users')
 @UseGuards(AuthGuard)

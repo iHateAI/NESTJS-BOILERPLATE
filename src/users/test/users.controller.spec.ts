@@ -3,7 +3,7 @@ import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
 import { UserCreateDummyDto } from './dummies/users.dto.dummy';
 import { UserCreateDummyReturn } from './dummies/users.return.dummy';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { mockAuthGuard } from 'src/auth/test/auth.guard.mock';
 
 describe('UsersController', () => {
